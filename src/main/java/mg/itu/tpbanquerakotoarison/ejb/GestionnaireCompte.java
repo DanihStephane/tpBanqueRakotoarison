@@ -8,6 +8,7 @@ import jakarta.annotation.sql.DataSourceDefinition;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 import mg.itu.tpbanquerakotoarison.entities.CompteBancaire;
@@ -39,6 +40,12 @@ public class GestionnaireCompte {
         em.persist(c);
     }
 
+    public int nbComptes() {
+        String requete = "SELECT count(c) from CompteBancaire c";
+        Query query = em.createQuery(requete);
+        return ((Long) query.getSingleResult()).intValue();
+    }
+
     public List<CompteBancaire> getAllComptes() {
         TypedQuery<CompteBancaire> query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
         return query.getResultList();
@@ -68,8 +75,8 @@ public class GestionnaireCompte {
         compte.retirer(montant);
         update(compte);
     }
-    
-    public void supprimerCompte(CompteBancaire compte){
+
+    public void supprimerCompte(CompteBancaire compte) {
         compte = em.merge(compte);
         em.remove(compte);
     }
