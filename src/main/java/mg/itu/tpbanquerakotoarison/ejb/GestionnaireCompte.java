@@ -24,23 +24,38 @@ import mg.itu.tpbanquerakotoarison.entities.CompteBancaire;
         user = "root",
         password = "root",
         databaseName = "banque",
-        properties = {
-            "useSSL=false",
-            "allowPublicKeyRetrieval=true"
-        }
-)
+    properties = {
+      "useSSL=false",
+     "allowPublicKeyRetrieval=true"
+    }
+)   
 @Stateless
 public class GestionnaireCompte {
-
+    
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
-
+    
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
-
+    
     public List<CompteBancaire> getAllComptes() {
         TypedQuery<CompteBancaire> query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
         return query.getResultList();
+    }
+    
+    public void transferer(CompteBancaire source, CompteBancaire destination, int montant) {
+        source.retirer(montant);
+        destination.deposer(montant);
+        update(source);
+        update(destination);
+    }
+
+    public CompteBancaire update(CompteBancaire compteBancaire) {
+        return em.merge(compteBancaire);
+    }
+    
+    public CompteBancaire findById(int id){
+        return em.find(CompteBancaire.class, id);
     }
 }
