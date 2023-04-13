@@ -90,10 +90,10 @@ public class MouvementBean implements Serializable {
     }
 
     public String enregistrerMouvement() {
-        if (typeMouvement.equals("****")) {
-            gestionnaireCompte.deposer(compte, montant);
-        } else {
+        if ("retrait".equals(typeMouvement)) {
             gestionnaireCompte.retirer(compte, montant);
+        } else {
+            gestionnaireCompte.deposer(compte, montant);
         }
         Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
         return "listeComptes?faces-redirect=true";

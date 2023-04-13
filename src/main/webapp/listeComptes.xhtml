@@ -23,28 +23,28 @@
                                      rowsPerPageTemplate="2,4,8,10"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
-                            <p:column width="60" sortBy="#{compte.id}">
+                            <p:column width="60" sortable="true" sortBy="#{compte.id}">
                                 <f:facet name="header">
                                     <h:outputText value="Id"/>
                                 </f:facet>
                                 <h:link outcome="mouvement?id=#{compte.id}" value="#{compte.id}"/>
                             </p:column>
 
-                            <p:column width="300" sortBy="#{compte.nom}" filterBy="#{compte.nom}">
+                            <p:column width="300" sortable="true" sortBy="#{compte.nom}" filterBy="#{compte.nom}">
                                 <f:facet name="header">
                                     <h:outputText value="Nom"/>
                                 </f:facet>
                                 <h:outputText value="#{compte.nom}"/>
                             </p:column>
 
-                            <p:column style="text-align:right;" width="80" sortBy="#{compte.solde}">
+                            <p:column style="text-align:right;" width="80" sortable="true" sortBy="#{compte.solde}">
                                 <f:facet name="header">
                                     <h:outputText value="Solde"/>
                                 </f:facet>
                                 <h:outputText value="#{compte.solde}"/>
                             </p:column>
 
-                            <p:column width="10">
+                            <p:column width="10" style="text-align:center;">
                                 <f:facet name="header">
                                     <h:outputText value="Opérations"/>
                                 </f:facet>
@@ -54,7 +54,7 @@
                                 </h:commandLink>
                                 <h:link outcome="modification?id=#{compte.id}"
                                         title="Modifier le possesseur du compte de #{compte.nom}" >
-                                    <h:graphicImage name="images/upd.png"/>
+                                    <h:graphicImage name="images/upd.png" />
                                 </h:link>
                             </p:column>
 
