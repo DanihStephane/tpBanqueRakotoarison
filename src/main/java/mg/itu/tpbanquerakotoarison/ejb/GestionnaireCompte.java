@@ -13,7 +13,7 @@ import java.util.List;
 import mg.itu.tpbanquerakotoarison.entities.CompteBancaire;
 
 /**
- * 
+ *
  * @author s.rakotoarison
  */
 @DataSourceDefinition(
@@ -24,26 +24,26 @@ import mg.itu.tpbanquerakotoarison.entities.CompteBancaire;
         user = "root",
         password = "root",
         databaseName = "banque",
-    properties = {
-      "useSSL=false",
-     "allowPublicKeyRetrieval=true"
-    }
-)   
+        properties = {
+            "useSSL=false",
+            "allowPublicKeyRetrieval=true"
+        }
+)
 @Stateless
 public class GestionnaireCompte {
-    
+
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
-    
+
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
-    
+
     public List<CompteBancaire> getAllComptes() {
         TypedQuery<CompteBancaire> query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
         return query.getResultList();
     }
-    
+
     public void transferer(CompteBancaire source, CompteBancaire destination, int montant) {
         source.retirer(montant);
         destination.deposer(montant);
@@ -54,8 +54,18 @@ public class GestionnaireCompte {
     public CompteBancaire update(CompteBancaire compteBancaire) {
         return em.merge(compteBancaire);
     }
-    
-    public CompteBancaire findById(long id){
+
+    public CompteBancaire findById(long id) {
         return em.find(CompteBancaire.class, id);
+    }
+
+    public void deposer(CompteBancaire compte, int montant) {
+        compte.deposer(montant);
+        update(compte);
+    }
+
+    public void retirer(CompteBancaire compte, int montant) {
+        compte.retirer(montant);
+        update(compte);
     }
 }
