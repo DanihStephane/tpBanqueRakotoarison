@@ -27,7 +27,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Id"/>
                                 </f:facet>
-                                <h:link outcome="mouvement?id=#{item.id}" value="#{item.id}"/>
+                                <h:link outcome="mouvement?id=#{compte.id}" value="#{compte.id}"/>
                             </p:column>
 
                             <p:column width="300" sortBy="#{compte.nom}" filterBy="#{compte.nom}">
@@ -52,6 +52,10 @@
                                                title="Supprimer le compte de #{compte.nom}" >
                                     <h:graphicImage name="images/del.png"/>
                                 </h:commandLink>
+                                <h:link outcome="modification?id=#{compte.id}"
+                                        title="Modifier le possesseur du compte de #{compte.nom}" >
+                                    <h:graphicImage name="images/upd.png"/>
+                                </h:link>
                             </p:column>
 
                         </p:dataTable>
