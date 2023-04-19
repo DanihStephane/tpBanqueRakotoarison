@@ -14,11 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * @author s.rakotoarison
  */
 @Entity
@@ -34,15 +35,17 @@ public class CompteBancaire implements Serializable {
 
     private String nom;
     private int solde;
-    
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OperationBancaire> operations = new ArrayList<>();
-            
-    
+
+    @Version
+    private int version;
+
     public List<OperationBancaire> getOperations() {
         return operations;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -64,20 +67,20 @@ public class CompteBancaire implements Serializable {
     }
 
     public CompteBancaire(){
-        
+
     }
-    
+
     public CompteBancaire(String nom, int solde){
         this.nom = nom;
         this.solde = solde;
         operations.add(new OperationBancaire("Création du compte", solde));
     }
-    
+
     public void deposer(int montant){
         solde += montant;
         operations.add(new OperationBancaire("Crédit", montant));
     }
-    
+
     public void retirer(int montant){
         if(montant < solde){
             solde -= montant;
@@ -87,7 +90,7 @@ public class CompteBancaire implements Serializable {
         }
         operations.add(new OperationBancaire("Débit", -montant));
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -112,5 +115,5 @@ public class CompteBancaire implements Serializable {
     public String toString() {
         return "mg.itu.randrianarivelo.entities.CompteBancaire[ id=" + id + " ]";
     }
-    
+
 }
