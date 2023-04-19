@@ -81,7 +81,7 @@ public class OperationBancaire implements Serializable {
         }
         OperationBancaire other = (OperationBancaire) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-    }
+        }
 
     @Override
     public String toString() {
